@@ -48,6 +48,8 @@
                         </div>
                     </form>
 
+                    <a href="">Trash</a>
+
                     <div class="btn-actions-pane-right">
                         <div role="group" class="btn-group-sm btn-group">
                             <button class="btn btn-focus">This week</button>
@@ -68,9 +70,9 @@
                         </thead>
 
                         <tbody>
-
+                        @foreach($products as $product)
                             <tr>
-                                <td class="text-center text-muted">#01</td>
+                                <td class="text-center text-muted">#{{ $product->id}}</td>
                                 <td>
                                     <div class="widget-content p-0">
                                         <div class="widget-content-wrapper">
@@ -79,34 +81,32 @@
                                                     <img style="height: 60px;"
                                                         data-toggle="tooltip" title="Image"
                                                         data-placement="bottom"
-                                                        src="./admin/assets/images/_default-product.jpg" alt="">
+                                                        src="{{$product->image}}" alt="">
                                                 </div>
                                             </div>
                                             <div class="widget-content-left flex2">
-                                                <div class="widget-heading">Pure Pineapple</div>
-                                                <div class="widget-subheading opacity-7">
-                                                    Calvin Klein
-                                                </div>
+                                                <div class="widget-heading">{{ $product->name }}</div>
+                                                <div class="widget-subheading opacity-7"></div>
                                             </div>
                                         </div>
                                     </div>
                                 </td>
-                                <td class="text-center">$599.00</td>
+                                <td class="text-center">{{number_format($product->price)}} VNĐ</td>
                                 <td class="text-center">
-                                    <a href="/product/detail/"
+                                    <a href="admin/product/detail/{{$product->id}}"
                                         class="btn btn-hover-shine btn-outline-primary border-0 btn-sm">
                                         Details
                                     </a>
-                                    <a href="./product-edit.html" data-toggle="tooltip" title="Edit"
+                                    <a href="/admin/product/edit/{{$product->id}}" data-toggle="tooltip" title="Edit"
                                         data-placement="bottom" class="btn btn-outline-warning border-0 btn-sm">
                                         <span class="btn-icon-wrapper opacity-8">
                                             <i class="fa fa-edit fa-w-20"></i>
                                         </span>
                                     </a>
-                                    <form class="d-inline" action="" method="post">
-                                        <button class="btn btn-hover-shine btn-outline-danger border-0 btn-sm"
-                                            type="submit" data-toggle="tooltip" title="Delete"
-                                            data-placement="bottom"
+                                    <form class="d-inline" action="/admin/product/delete/{{$product->id}}" method="POST">
+                                        @csrf
+                                        <button class="btn btn-hover-shine btn-outline-danger border-0 btn-sm" type="submit" 
+                                            data-toggle="tooltip" title="Delete" data-placement="bottom"
                                             onclick="return confirm('Do you really want to delete this item?')">
                                             <span class="btn-icon-wrapper opacity-8">
                                                 <i class="fa fa-trash fa-w-20"></i>
@@ -115,7 +115,7 @@
                                     </form>
                                 </td>
                             </tr>
-
+                        @endforeach
                             
                         </tbody>
                     </table>
