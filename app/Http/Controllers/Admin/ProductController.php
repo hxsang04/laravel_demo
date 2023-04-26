@@ -69,7 +69,6 @@ class ProductController extends Controller
     public function update(UpdateProductRequest $request, Product $product)
     {
         $response = $this->productService->update($request, $product);
-
         if($response){
             return redirect()->to('admin/product/detail/'.$product->id);
         }
@@ -81,6 +80,27 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         $product->delete();
-        return back();
+        return back()->with('success','Successful delete!');
+    }
+
+    public function trashed(){
+        $products = $this->productService->trashed();
+        return view('admin.product.trashed', ['products' => $products]);
+    }
+
+    public function restore($id){
+        $response = $this->productService->restore($id);
+        if($response){
+            return back()->with('success', 'Successful restore!');
+        }
+        
+    }
+
+    public function remove($id){
+        $response = $this->productService->remove($id);
+        if($response){
+            return back()->with('success', 'Successful remove!');
+        }
+        
     }
 }

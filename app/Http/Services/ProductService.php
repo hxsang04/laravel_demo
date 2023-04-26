@@ -36,4 +36,24 @@ class ProductService
         };
         
     }
+
+    public function trashed(){
+        return Product::onlyTrashed()->get();
+    }
+
+    public function restore($id){
+        $product = Product::withTrashed()->findOrFail($id);
+        if(!empty($product)){
+            $product->restore();
+            return true;
+        }
+    }
+
+    public function remove($id){
+        $product = Product::withTrashed()->findOrFail($id);
+        if(!empty($product)){
+            $product->forceDelete();
+            return true;
+        }
+    }
 }

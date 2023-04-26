@@ -69,6 +69,7 @@
                                 <th class="text-center">ID</th>
                                 <th>Name</th>
                                 <th class="text-center">Price</th>  
+                                <th class="text-center">Delete at</th>  
                                 <th class="text-center">Actions</th>
                             </tr>
                         </thead>
@@ -96,22 +97,21 @@
                                     </div>
                                 </td>
                                 <td class="text-center">{{number_format($product->price)}} VNĐ</td>
+                                <td class="text-center">{{$product->deleted_at}}</td>
                                 <td class="text-center">
-                                    <a href="admin/product/detail/{{$product->id}}"
-                                        class="btn btn-hover-shine btn-outline-primary border-0 btn-sm">
-                                        Details
-                                    </a>
-                                    <a href="/admin/product/edit/{{$product->id}}" data-toggle="tooltip" title="Edit"
-                                        data-placement="bottom" class="btn btn-outline-warning border-0 btn-sm">
-                                        <span class="btn-icon-wrapper opacity-8">
-                                            <i class="fa fa-edit fa-w-20"></i>
-                                        </span>
-                                    </a>
-                                    <form class="d-inline" action="/admin/product/delete/{{$product->id}}" method="POST">
+                                    <form class="d-inline" action="/admin/product/restore/{{$product->id}}" method="POST">
+                                        @csrf
+                                        <button class="btn btn-hover-shine btn-outline-primary border-0 btn-sm" type="submit" 
+                                            data-toggle="tooltip" title="Restore" data-placement="bottom"
+                                            onclick="return confirm('Do you really want to restore this item?')">
+                                            Restore
+                                        </button>
+                                    </form>
+                                    <form class="d-inline" action="/admin/product/remove/{{$product->id}}" method="POST">
                                         @csrf
                                         <button class="btn btn-hover-shine btn-outline-danger border-0 btn-sm" type="submit" 
                                             data-toggle="tooltip" title="Delete" data-placement="bottom"
-                                            onclick="return confirm('Do you really want to delete this item?')">
+                                            onclick="return confirm('Do you really want to remove this item?')">
                                             <span class="btn-icon-wrapper opacity-8">
                                                 <i class="fa fa-trash fa-w-20"></i>
                                             </span>

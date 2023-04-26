@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Frontend\ShopController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,7 @@ use App\Http\Controllers\Admin\ProductController;
 |
 */
 
+// Backend Route
 Route::prefix('admin')->group(function(){
 
     Route::get('/login', function(){
@@ -29,8 +31,19 @@ Route::prefix('admin')->group(function(){
         Route::get('/edit/{product}', [ProductController::class, 'edit']);
         Route::post('/edit/{product}', [ProductController::class, 'update']);
         Route::post('/delete/{product}', [ProductController::class, 'destroy']);
+        Route::get('/trashed', [ProductController::class, 'trashed']);
+        Route::post('/restore/{id}', [ProductController::class, 'restore']);
+        Route::post('/remove/{id}', [ProductController::class, 'remove']);
 
     });
 
 });
+
+//Frontend Route
+
+Route::get('', function(){
+    return view('frontend.index');
+});
+Route::get('/shop', [ShopController::class, 'index']);
+Route::get('/product/{product}', [ShopController::class, 'product']);
 
