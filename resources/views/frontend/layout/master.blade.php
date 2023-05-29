@@ -100,7 +100,7 @@
                                     <span>1</span>
                                 </a>
                             </li>
-                            <li class="cart-icon"><a href="#">
+                            <li class="cart-icon"><a href="{{route('cart')}}">
                                     <i class="icon_bag_alt"></i>
                                     <span>3</span>
                                 </a>

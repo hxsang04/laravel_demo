@@ -8,20 +8,23 @@ use App\Models\Product;
 
 class CartController extends Controller
 {
-    public function addToCart(Request $request,Product $product){
+    public function index(){
+        return view('frontend.cart');
+    }
+
+    public function addToCart(Request $request, $id){
         $quantity = $request->input('quantity');
         $cart = session()->get('cart');
-        if(isset($cart[$product->id])){
-            $cart[$product->id]['quantity'] += $quantity;
+        if(isset($cart[$id])){
+            $cart[$id]['quantity'] += $quantity;
         }
         else{
-            $cart[$product->id] = [
-                'product_id' => $product->id,
+            $cart[$id] = [
+                'product_id' => $id,
                 'quantity' => $quantity,
             ];
         }
         session()->put('cart', $cart);
-        dd(session('cart'));
         return redirect()->back()->with('success', 'Product added to cart successfully');
     }
 }

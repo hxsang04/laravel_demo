@@ -47,7 +47,8 @@ Route::get('', function(){
 
 Route::get('/shop', [ShopController::class, 'index']);
 Route::get('/product/{product}', [ShopController::class, 'product']);
-Route::post('/addToCart/{product}', [CartController::class, 'addToCart'])->name('addToCart');
+Route::get('/cart', [CartController::class, 'index'])->name('cart');
+Route::post('/addToCart/{id}', [CartController::class, 'addToCart'])->name('addToCart');
 
 
 Route::middleware([
