@@ -14,6 +14,7 @@ class ProductController extends Controller
     protected $productService;
     protected $response = true;
 
+
     public function __construct(ProductService $productService)
     {
         $this->productService = $productService;

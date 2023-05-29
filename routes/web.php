@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Frontend\ShopController;
+use App\Http\Controllers\Frontend\CartController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -18,9 +20,7 @@ use App\Http\Controllers\Frontend\ShopController;
 // Backend Route
 Route::prefix('admin')->group(function(){
 
-    Route::get('/login', function(){
-        return view('admin.account.login');
-    });
+    // Route::get('/login', [AuthController::class, 'login']);
 
     Route::prefix('/product')->group(function(){
 
@@ -36,7 +36,7 @@ Route::prefix('admin')->group(function(){
         Route::post('/remove/{id}', [ProductController::class, 'remove']);
 
     });
-
+   
 });
 
 //Frontend Route
@@ -44,6 +44,18 @@ Route::prefix('admin')->group(function(){
 Route::get('', function(){
     return view('frontend.index');
 });
+
 Route::get('/shop', [ShopController::class, 'index']);
 Route::get('/product/{product}', [ShopController::class, 'product']);
+Route::post('/addToCart/{product}', [CartController::class, 'addToCart'])->name('addToCart');
 
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});

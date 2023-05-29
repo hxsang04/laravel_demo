@@ -16,4 +16,5 @@ class ShopController extends Controller
     public function product(Product $product){
         return view('frontend.product', ['product' => $product]);
     }
+    
 }

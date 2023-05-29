@@ -46,7 +46,17 @@
                     </div>
                 </div>
                 <div class="ht-right">
-                    <a href="#" class="login-panel"><i class="fa fa-user"></i>Login</a>
+                    @if (Auth::check())
+                        <a href="/user/profile" class="login-panel d-flex"><i class="fa fa-user"></i>{{Auth::user()->name}} |
+                            <form method="POST" action="{{ route('logout') }}" >
+                                @csrf
+                               <button type="submit" style="border: none; background-color: #fff; ">Log Out</button> 
+                            </form>
+                        </a>
+                        
+                    @else
+                        <a href="{{ route('login') }}" class="login-panel"><i class="fa fa-user"></i>Login</a>
+                    @endif
                     <div class="lan-selector">
                         <select class="language_drop" name="countries" id="countries" style="width:300px;">
                             <option value='yt' data-image="./frontend/assets/img/flag-1.jpg" data-imagecss="flag yt"
