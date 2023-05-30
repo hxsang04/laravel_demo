@@ -149,7 +149,7 @@
                     @if(session('success'))
                         <x-alert type="success" message="{{ session('success') }}"/>
                     @endif
-                    <form method="POST" action="{{ route('addToCart', $product->id)}}">
+                    <form method="POST" action="{{ route('addToCart', $product)}}">
                         @csrf
                         <div class="row">
                             <div class="col-lg-6">

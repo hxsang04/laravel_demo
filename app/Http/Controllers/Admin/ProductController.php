@@ -11,22 +11,14 @@ use App\Http\Services\ProductService;
 
 class ProductController extends Controller
 {
-    protected $productService;
-    protected $response = true;
-
-
-    public function __construct(ProductService $productService)
-    {
-        $this->productService = $productService;
-    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $products = $this->productService->all();
+        $products = Product::orderByDesc('id')->get();
 
-        return view('admin.product.view', ['products' => $products]);
+        return view('admin.product.view', compact('products'));
     }
 
     /**
@@ -42,9 +34,15 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        $product = $this->productService->store($request);
-
+        $data = $request->validated();
+        $image = $request->file('image');
+        $nameImage = $image->hashName();
+        $image->storeAs('public/uploads/product', $nameImage);
+        $data['image'] = 'storage/uploads/product/'. $nameImage;
+        
+        $product = Product::create($data);
         return redirect()->to('admin/product/detail/'.$product->id);
+        
         
     }
 
@@ -53,7 +51,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return view('admin.product.detail', ['product' => $product]);
+        return view('admin.product.detail', compact('product'));
     }
 
     /**
@@ -61,7 +59,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        return view('admin.product.edit', ['product' => $product]);
+        return view('admin.product.edit', compact('product'));
     }
 
     /**
@@ -69,10 +67,18 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, Product $product)
     {
-        $response = $this->productService->update($request, $product);
-        if($response){
-            return redirect()->to('admin/product/detail/'.$product->id);
+        $data = $request->validated();
+        if($request->hasFile('image')){
+            $image = $request->file('image');
+            $nameImage = $image->hashName();
+            $image->storeAs('public/uploads/product', $nameImage);
+            $data['image'] = 'storage/uploads/product/'. $nameImage;
         }
+
+        $product->update($data);
+        return redirect()->to('admin/product/detail/'.$product->id);
+        
+            
     }
 
     /**
@@ -85,23 +91,24 @@ class ProductController extends Controller
     }
 
     public function trashed(){
-        $products = $this->productService->trashed();
-        return view('admin.product.trashed', ['products' => $products]);
+        $products = Product::onlyTrashed()->get();;
+        return view('admin.product.trashed', compact('products'));
     }
 
     public function restore($id){
-        $response = $this->productService->restore($id);
-        if($response){
+        $product = Product::withTrashed()->findOrFail($id);
+        if(!empty($product)){
+            $product->restore();
             return back()->with('success', 'Successful restore!');
         }
         
     }
 
     public function remove($id){
-        $response = $this->productService->remove($id);
-        if($response){
+        $product = Product::withTrashed()->findOrFail($id);
+        if(!empty($product)){
+            $product->forceDelete();
             return back()->with('success', 'Successful remove!');
         }
-        
     }
 }

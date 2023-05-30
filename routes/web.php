@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Frontend\ShopController;
 use App\Http\Controllers\Frontend\CartController;
+use App\Http\Controllers\Frontend\CheckOutController;
 
 
 /*
@@ -45,10 +46,14 @@ Route::get('', function(){
     return view('frontend.index');
 });
 
-Route::get('/shop', [ShopController::class, 'index']);
-Route::get('/product/{product}', [ShopController::class, 'product']);
-Route::get('/cart', [CartController::class, 'index'])->name('cart');
-Route::post('/addToCart/{id}', [CartController::class, 'addToCart'])->name('addToCart');
+Route::get('/shop', [ShopController::class, 'index'])->name('shop');
+Route::get('/product/{product}', [ShopController::class, 'product'])->name('product');
+Route::get('/order-history', [ShopController::class, 'orderHistory'])->name('orderHistory');
+Route::get('/order-history/{order}', [ShopController::class, 'orderHistoryDetail'])->name('orderHistoryDetail');
+Route::get('/cart', [CartController::class, 'cart'])->name('cart');
+Route::post('/addToCart/{product}', [CartController::class, 'addToCart'])->name('addToCart');
+Route::get('/checkout', [CheckOutController::class, 'checkOut'])->middleware('auth')->name('checkOut');
+Route::post('/checkout', [CheckOutController::class, 'checkOutPost'])->middleware('auth')->name('checkOutPost');
 
 
 Route::middleware([

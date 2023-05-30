@@ -175,13 +175,13 @@
                                             </div>
                                             <ul>
                                                 <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                                <li class="quick-view"><a href="/product/{{$product->id}}">+ Quick View</a></li>
+                                                <li class="quick-view"><a href="{{route('product', $product)}}">+ Quick View</a></li>
                                                 <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
                                             </ul>
                                         </div>
                                         <div class="pi-text">
                                             {{-- <div class="catagory-name">Towel</div> --}}
-                                            <a href="/product/{{$product->id}}">
+                                            <a href="{{route('product', $product)}}">
                                                 <h5>{{$product->name}}</h5>
                                             </a>
                                             <div class="product-price">
