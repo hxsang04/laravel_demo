@@ -1326,7 +1326,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="./order.html">
+                                        <a href="/admin/order">
                                             <i class="metismenu-icon"></i>Order
                                         </a>
                                     </li>

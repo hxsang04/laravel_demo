@@ -19,11 +19,11 @@ class ShopController extends Controller
     }
 
     public function orderHistory(){
-        return view('frontend.order_history');
+        return view('frontend.order-history');
     }
 
     public function orderHistoryDetail(Order $order){
-        return view('frontend.order_history_detail', compact('order'));
+        return view('frontend.order-history-detail', compact('order'));
     }
     
 }

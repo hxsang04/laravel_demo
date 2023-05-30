@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Frontend\ShopController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\CheckOutController;
@@ -37,6 +38,12 @@ Route::prefix('admin')->group(function(){
         Route::post('/remove/{id}', [ProductController::class, 'remove']);
 
     });
+
+    Route::prefix('/order')->group(function(){
+        Route::get('', [OrderController::class, 'index']);
+        Route::get('/detail/{order}', [OrderController::class, 'show'])->name('order.detail');
+    });
+
    
 });
 
