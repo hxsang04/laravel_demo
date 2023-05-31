@@ -957,7 +957,7 @@
                                     </div>
                                 </div>
                                 <div class="widget-content-left  ml-3 header-user-info">
-                                    <div class="widget-heading"> Alina Mclourd </div>
+                                    <div class="widget-heading"> {{Auth::guard('admin')->name}}</div>
                                     <div class="widget-subheading"> VP People Manager </div>
                                 </div>
                                 <div class="widget-content-right header-user-info ml-3">
@@ -1315,7 +1315,7 @@
                             <li class="app-sidebar__heading">Menu</li>
 
                             <li class="mm-active">
-                                <a href="#">
+                                <a href="{{route('product.index')}}">
                                     <i class="metismenu-icon pe-7s-plugin"></i>Applications
                                     <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                 </a>
@@ -1331,7 +1331,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="./user.html">
+                                        <a href="{{route('user.index')}}">
                                             <i class="metismenu-icon"></i>User
                                         </a>
                                     </li>
@@ -2516,11 +2516,11 @@
     </div>
     <div class="app-drawer-overlay d-none animated fadeIn"></div>
     
-    <script src="/admin/assets/scripts/jquery-3.2.1.min.js"></script>
+    <script src="./admin/assets/js/jquery-3.2.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-    <script type="text/javascript" src="/admin/assets/scripts/main.js"></script>
-    <script type="text/javascript" src="/admin/assets/scripts/my_script.js"></script>
+    <script type="text/javascript" src="./admin/assets/js/main.js"></script>
+    <script type="text/javascript" src="./admin/assets/js/my_script.js"></script>
 </body>
 
 </html>

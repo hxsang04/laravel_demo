@@ -24,7 +24,7 @@
             <div class="col-md-12">
                 <div class="main-card mb-3 card">
                     <div class="card-body">
-                        <form method="POST" action="/admin/product/edit/{{$product->id}}" enctype="multipart/form-data">
+                        <form method="POST" action="{{route('product.edit', $product)}}" enctype="multipart/form-data">
                         @csrf
                             <div class="position-relative row form-group">
                                 <label for="name" class="col-md-3 text-md-right col-form-label">Name</label>

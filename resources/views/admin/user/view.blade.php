@@ -11,23 +11,16 @@
                     <i class="pe-7s-ticket icon-gradient bg-mean-fruit"></i>
                 </div>
                 <div>
-                    Product
+                    User
                     <div class="page-title-subheading">
                         View, create, update, delete and manage.
                     </div>
                 </div>
             </div>
 
-            <div class="page-title-actions">
-                <a href="/admin/product/create" class="btn-shadow btn-hover-shine mr-3 btn btn-primary">
-                    <span class="btn-icon-wrapper pr-2 opacity-7">
-                        <i class="fa fa-plus fa-w-20"></i>
-                    </span>
-                    Create
-                </a>
-            </div>
         </div>
     </div>
+
     @if (session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
@@ -36,9 +29,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="main-card mb-3 card">
-
                 <div class="card-header">
-
                     <form>
                         <div class="input-group">
                             <input type="search" name="search" id="search"
@@ -52,8 +43,7 @@
                         </div>
                     </form>
 
-                    <a class="ml-5" style="border: 1px solid; padding: 7px; text-decoration: none" href="/admin/product/trashed">Trash</a>
-
+                    <a class="ml-5" style="border: 1px solid; padding: 7px; text-decoration: none" href="{{route('user.trash')}}">Trash</a>
                     <div class="btn-actions-pane-right">
                         <div role="group" class="btn-group-sm btn-group">
                             <button class="btn btn-focus">This week</button>
@@ -67,51 +57,40 @@
                         <thead>
                             <tr>
                                 <th class="text-center">ID</th>
-                                <th>Name</th>
-                                <th class="text-center">Price</th>  
-                                <th class="text-center">Delete at</th>  
+                                <th>Full Name</th>
+                                <th class="text-center">Email</th>
+                                <th class="text-center">Created At</th>
                                 <th class="text-center">Actions</th>
                             </tr>
                         </thead>
-
                         <tbody>
-                        @foreach($products as $product)
+                            @foreach($users as $user)
                             <tr>
-                                <td class="text-center text-muted">#{{ $product->id}}</td>
+                                <td class="text-center text-muted">#{{$user->id}}</td>
                                 <td>
                                     <div class="widget-content p-0">
                                         <div class="widget-content-wrapper">
-                                            <div class="widget-content-left mr-3">
-                                                <div class="widget-content-left">
-                                                    <img style="height: 60px;"
-                                                        data-toggle="tooltip" title="Image"
-                                                        data-placement="bottom"
-                                                        src="{{$product->image}}" alt="">
-                                                </div>
-                                            </div>
                                             <div class="widget-content-left flex2">
-                                                <div class="widget-heading">{{ $product->name }}</div>
-                                                <div class="widget-subheading opacity-7"></div>
+                                                <div class="widget-heading">{{$user->name}}</div>
                                             </div>
                                         </div>
                                     </div>
                                 </td>
-                                <td class="text-center">{{number_format($product->price)}} VNĐ</td>
-                                <td class="text-center">{{$product->deleted_at}}</td>
+                                <td class="text-center">{{$user->email}}</td>
                                 <td class="text-center">
-                                    <form class="d-inline" action="/admin/product/restore/{{$product->id}}" method="POST">
+                                    {{$user->created_at}}
+                                </td>
+                                <td class="text-center">
+                                    <a href="{{route('user.show', $user)}}"
+                                        class="btn btn-hover-shine btn-outline-primary border-0 btn-sm">
+                                        Details
+                                    </a>
+                                    <form class="d-inline" action="{{route('user.destroy', $user)}}" method="post">
                                         @csrf
-                                        <button class="btn btn-hover-shine btn-outline-primary border-0 btn-sm" type="submit" 
-                                            data-toggle="tooltip" title="Restore" data-placement="bottom"
-                                            onclick="return confirm('Do you really want to restore this item?')">
-                                            Restore
-                                        </button>
-                                    </form>
-                                    <form class="d-inline" action="/admin/product/remove/{{$product->id}}" method="POST">
-                                        @csrf
-                                        <button class="btn btn-hover-shine btn-outline-danger border-0 btn-sm" type="submit" 
-                                            data-toggle="tooltip" title="Delete" data-placement="bottom"
-                                            onclick="return confirm('Do you really want to remove this item?')">
+                                        <button class="btn btn-hover-shine btn-outline-danger border-0 btn-sm"
+                                            type="submit" data-toggle="tooltip" title="Delete"
+                                            data-placement="bottom"
+                                            onclick="return confirm('Do you really want to delete this item?')">
                                             <span class="btn-icon-wrapper opacity-8">
                                                 <i class="fa fa-trash fa-w-20"></i>
                                             </span>
@@ -119,7 +98,7 @@
                                     </form>
                                 </td>
                             </tr>
-                        @endforeach
+                            @endforeach
                             
                         </tbody>
                     </table>
@@ -198,4 +177,5 @@
     </div>
 </div>
 <!-- End Main -->
+
 @endsection

@@ -41,7 +41,7 @@ class ProductController extends Controller
         $data['image'] = 'storage/uploads/product/'. $nameImage;
         
         $product = Product::create($data);
-        return redirect()->to('admin/product/detail/'.$product->id);
+        return redirect()->route('product.show',$product->id);
         
         
     }
@@ -51,7 +51,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return view('admin.product.detail', compact('product'));
+        return view('admin.product.show', compact('product'));
     }
 
     /**
@@ -76,7 +76,7 @@ class ProductController extends Controller
         }
 
         $product->update($data);
-        return redirect()->to('admin/product/detail/'.$product->id);
+        return redirect()->route('product.show',$product->id);
         
             
     }
@@ -90,9 +90,9 @@ class ProductController extends Controller
         return back()->with('success','Successful delete!');
     }
 
-    public function trashed(){
-        $products = Product::onlyTrashed()->get();;
-        return view('admin.product.trashed', compact('products'));
+    public function trash(){
+        $products = Product::onlyTrashed()->get();
+        return view('admin.product.trash', compact('products'));
     }
 
     public function restore($id){

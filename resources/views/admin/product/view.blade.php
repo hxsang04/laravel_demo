@@ -19,7 +19,7 @@
             </div>
 
             <div class="page-title-actions">
-                <a href="/admin/product/create" class="btn-shadow btn-hover-shine mr-3 btn btn-primary">
+                <a href="{{route('product.create')}}" class="btn-shadow btn-hover-shine mr-3 btn btn-primary">
                     <span class="btn-icon-wrapper pr-2 opacity-7">
                         <i class="fa fa-plus fa-w-20"></i>
                     </span>
@@ -28,6 +28,7 @@
             </div>
         </div>
     </div>
+    
     @if (session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
@@ -52,7 +53,7 @@
                         </div>
                     </form>
 
-                    <a class="ml-5" style="border: 1px solid; padding: 7px; text-decoration: none" href="/admin/product/trashed">Trash</a>
+                    <a class="ml-5" style="border: 1px solid; padding: 7px; text-decoration: none" href="{{route('product.trash')}}">Trash</a>
 
                     <div class="btn-actions-pane-right">
                         <div role="group" class="btn-group-sm btn-group">
@@ -97,17 +98,17 @@
                                 </td>
                                 <td class="text-center">{{number_format($product->price)}} VNĐ</td>
                                 <td class="text-center">
-                                    <a href="admin/product/detail/{{$product->id}}"
+                                    <a href="{{route('product.show',$product)}}"
                                         class="btn btn-hover-shine btn-outline-primary border-0 btn-sm">
                                         Details
                                     </a>
-                                    <a href="/admin/product/edit/{{$product->id}}" data-toggle="tooltip" title="Edit"
+                                    <a href="{{route('product.edit',$product)}}" data-toggle="tooltip" title="Edit"
                                         data-placement="bottom" class="btn btn-outline-warning border-0 btn-sm">
                                         <span class="btn-icon-wrapper opacity-8">
                                             <i class="fa fa-edit fa-w-20"></i>
                                         </span>
                                     </a>
-                                    <form class="d-inline" action="/admin/product/delete/{{$product->id}}" method="POST">
+                                    <form class="d-inline" action="{{route('product.destroy', $product)}}" method="POST">
                                         @csrf
                                         <button class="btn btn-hover-shine btn-outline-danger border-0 btn-sm" type="submit" 
                                             data-toggle="tooltip" title="Delete" data-placement="bottom"

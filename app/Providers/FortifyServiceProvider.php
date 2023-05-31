@@ -14,6 +14,13 @@ use Laravel\Fortify\Fortify;
 use Laravel\Fortify\Contracts\LoginResponse;
 use Laravel\Fortify\Contracts\RegisterResponse;
 
+use Illuminate\Contracts\Auth\StatefulGuard;
+use App\Actions\Fortify\AttemptToAuthenticate;
+use App\Actions\Fortify\RedirectIfTwoFactorAuthenticatable;
+use App\Http\Controllers\Admin\AuthController;
+use Auth;
+
+
 class FortifyServiceProvider extends ServiceProvider
 {
     /**
@@ -21,19 +28,15 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->instance(LoginResponse::class, new class implements LoginResponse {
-            public function toResponse($request)
-            {
-                return redirect('/');
-            }
+
+        $this->app->when([
+            AuthController::class,
+            AttemptToAuthenticate::class,
+            RedirectIfTwoFactorAuthenticatable::class,
+        ])->needs(StatefulGuard::class)->give(function (){
+            return Auth::guard('admin');
         });
 
-        $this->app->instance(RegisterResponse::class, new class implements RegisterResponse {
-            public function toResponse($request)
-            {
-                return redirect('/');
-            }
-        });
     }
 
     /**

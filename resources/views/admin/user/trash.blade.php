@@ -1,6 +1,7 @@
 @extends('admin.layout.master')
 
 @section('content')
+
 <!-- Main -->
 <div class="app-main__inner">
     <div class="app-page-title">
@@ -10,20 +11,35 @@
                     <i class="pe-7s-ticket icon-gradient bg-mean-fruit"></i>
                 </div>
                 <div>
-                    Order
+                    User
                     <div class="page-title-subheading">
                         View, create, update, delete and manage.
                     </div>
                 </div>
             </div>
 
+            <div class="page-title-actions">
+                <a href="./user-create.html" class="btn-shadow btn-hover-shine mr-3 btn btn-primary">
+                    <span class="btn-icon-wrapper pr-2 opacity-7">
+                        <i class="fa fa-plus fa-w-20"></i>
+                    </span>
+                    Create
+                </a>
+            </div>
         </div>
     </div>
 
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
     <div class="row">
         <div class="col-md-12">
             <div class="main-card mb-3 card">
+
                 <div class="card-header">
+
                     <form>
                         <div class="input-group">
                             <input type="search" name="search" id="search"
@@ -50,37 +66,42 @@
                         <thead>
                             <tr>
                                 <th class="text-center">ID</th>
-                                <th>Customer</th>
-                                <th class="text-center">Address</th>
-                                <th class="text-center">Total Price</th>
+                                <th>Full Name</th>
+                                <th class="text-center">Email</th>
+                                <th class="text-center">Deleted At</th>
                                 <th class="text-center">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($orders as $order )
-                                <tr>
-                                    <td class="text-center text-muted">#{{$order->id}}</td>
-                                    <td>
-                                        <div class="widget-content p-0">
-                                            <div class="widget-content-wrapper">
-                                                <div class="widget-content-left flex2">
-                                                    <div class="widget-heading">{{$order->name}}</div>
-                                                </div>
+                            @foreach($users as $user)
+                            <tr>
+                                <td class="text-center text-muted">#{{$user->id}}</td>
+                                <td>
+                                    <div class="widget-content p-0">
+                                        <div class="widget-content-wrapper">
+                                            <div class="widget-content-left flex2">
+                                                <div class="widget-heading">{{$user->name}}</div>
                                             </div>
                                         </div>
-                                    </td>
-                                    <td class="text-center">
-                                        {{$order->address}}
-                                    </td>
-                                    <td class="text-center">{{number_format($order->total_price)}}</td>
-                                    <td class="text-center">
-                                        <a href="{{route('order.show', $order)}}"
-                                            class="btn btn-hover-shine btn-outline-primary border-0 btn-sm">
-                                            Details
-                                        </a>
-                                    </td>
-                                </tr>
+                                    </div>
+                                </td>
+                                <td class="text-center">{{$user->email}}</td>
+                                <td class="text-center">
+                                    {{$user->deleted_at}}
+                                </td>
+                                <td class="text-center">
+                                     <form class="d-inline" action="{{route('user.restore', $user->id)}}" method="POST">
+                                        @csrf
+                                        <button class="btn btn-hover-shine btn-outline-primary border-0 btn-sm" type="submit" 
+                                            data-toggle="tooltip" title="Restore" data-placement="bottom"
+                                            onclick="return confirm('Do you really want to restore this item?')">
+                                            Restore
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
                             @endforeach
+                            
                         </tbody>
                     </table>
                 </div>
@@ -158,4 +179,5 @@
     </div>
 </div>
 <!-- End Main -->
+
 @endsection

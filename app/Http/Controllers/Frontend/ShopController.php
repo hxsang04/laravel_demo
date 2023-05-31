@@ -10,12 +10,16 @@ use App\Models\Order;
 class ShopController extends Controller
 {
     public function index(){
+        return view('frontend.index');
+    }
+
+    public function shop(){
         $products =  Product::orderByDesc('id')->get();
-        return view('frontend.shop', ['products' => $products]);
+        return view('frontend.shop', compact('products'));
     }
     
     public function product(Product $product){
-        return view('frontend.product', ['product' => $product]);
+        return view('frontend.product', compact('product'));
     }
 
     public function orderHistory(){
