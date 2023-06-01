@@ -97,12 +97,12 @@
                         <ul class="nav-right">
                             <li class="heart-icon"><a href="#">
                                     <i class="icon_heart_alt"></i>
-                                    <span>1</span>
+                                    <span>0</span>
                                 </a>
                             </li>
                             <li class="cart-icon"><a href="{{route('cart')}}">
                                     <i class="icon_bag_alt"></i>
-                                    <span>3</span>
+                                    <span>{{ !empty(session('cart')) ? count(session('cart')) : 0 }}</span>
                                 </a>
                                 <div class="cart-hover">
                                     <div class="select-items">

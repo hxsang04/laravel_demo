@@ -146,10 +146,12 @@
                     </div>
                 </div>
                 <div class="col-lg-9">
-                    @if(session('success'))
-                        <x-alert type="success" message="{{ session('success') }}"/>
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
                     @endif
-                    <form method="POST" action="{{ route('addToCart', $product)}}">
+                    <form method="POST" action="{{ route('cart.add', $product)}}">
                         @csrf
                         <div class="row">
                             <div class="col-lg-6">

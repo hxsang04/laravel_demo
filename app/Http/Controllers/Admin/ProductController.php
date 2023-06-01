@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Http\Services\ProductService;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ProductsExport;
+use App\Imports\ProductsImport;
 
 class ProductController extends Controller
 {
@@ -16,7 +19,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::orderByDesc('id')->get();
+        $products = Product::orderByDesc('id')->paginate(5);
 
         return view('admin.product.view', compact('products'));
     }
@@ -91,7 +94,7 @@ class ProductController extends Controller
     }
 
     public function trash(){
-        $products = Product::onlyTrashed()->get();
+        $products = Product::onlyTrashed()->paginate(5);
         return view('admin.product.trash', compact('products'));
     }
 
@@ -110,5 +113,16 @@ class ProductController extends Controller
             $product->forceDelete();
             return back()->with('success', 'Successful remove!');
         }
+    }
+    
+    public function import(Request $request){
+        $request->validate(['products-excel' => 'required|mimes:xls,xlsx,xml,csv']);
+        Excel::import(new ProductsImport, $request->file('products-excel'));
+        
+        return redirect()->route('product.index')->with('success', 'Import successful!');
+    }
+
+    public function export(){
+        return Excel::download(new ProductsExport, 'products.xlsx');
     }
 }

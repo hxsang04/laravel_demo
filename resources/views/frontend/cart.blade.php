@@ -21,6 +21,11 @@
     <!-- Shopping Cart Section Begin -->
     <section class="shopping-cart spad">
         <div class="container">
+            @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
             <div class="row">
                 <div class="col-lg-12">
                     <div class="cart-table">
@@ -46,7 +51,14 @@
                                         <td class="p-price first-row">{{number_format($product['price'])}} VNĐ</td>
                                         <td class="qua-col first-row">{{$product['quantity']}}</td>
                                         <td class="total-price first-row">{{ number_format($product['price'] * $product['quantity'] )}} VNĐ</td>
-                                        <td class="close-td first-row"><i class="ti-close"></i></td>
+                                        <td class="close-td first-row">
+                                            <form method="POST" action="{{route('cart.delete', $product['product_id'])}}">
+                                                @csrf
+                                                <button type="submit" style="background: #fff; border: none;">
+                                                    <i class="ti-close"></i>
+                                                </button>
+                                            </form>
+                                        </td>
                                     </tr>
                                     @endforeach
                                 @endif

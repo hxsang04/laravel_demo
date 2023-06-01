@@ -13,7 +13,7 @@ class CartController extends Controller
         return view('frontend.cart');
     }
 
-    public function addToCart(Request $request, Product $product){
+    public function add(Request $request, Product $product){
         $quantity = $request->input('quantity');
         $cart = session('cart');
 
@@ -31,14 +31,22 @@ class CartController extends Controller
             ];
         }
         session()->put('cart', $cart);
+        $this->totalPrice();
+        return redirect()->back()->with('success', 'Product added to cart successfully');
+    }
 
+    public function delete($id){
+        session()->pull('cart.'.$id);
+        $this->totalPrice();
+        return back()->with('success', 'Remove successful!');
+    }
+
+    protected function totalPrice(){
         $total_price = 0;
-        foreach($cart as $item){
+        foreach(session('cart') as $item){
             $total_price += $item['quantity'] * $item['price'];
         }
         session()->put('total_price', $total_price);
-
-        return redirect()->back()->with('success', 'Product added to cart successfully');
     }
 
 }

@@ -158,7 +158,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-5 col-md-5 text-right">
-                                <p>Show 01- 09 Of 36 Product</p>
+                                <p>Show {{$products->firstItem()}} - {{$products->lastItem()}} Of {{$products->total()}} Product</p>
                             </div>
                         </div>
                     </div>
@@ -193,11 +193,8 @@
                             @endforeach
                         </div>
                     </div>
-                    <div class="loading-more">
-                        <i class="icon_loading"></i>
-                        <a href="#">
-                            Loading More
-                        </a>
+                    <div class="loading-more d-flex justify-content-center">
+                        {{ $products->links() }}
                     </div>
                 </div>
             </div>

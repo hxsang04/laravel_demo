@@ -14,7 +14,7 @@ class ShopController extends Controller
     }
 
     public function shop(){
-        $products =  Product::orderByDesc('id')->get();
+        $products =  Product::orderByDesc('id')->paginate(6);
         return view('frontend.shop', compact('products'));
     }
     

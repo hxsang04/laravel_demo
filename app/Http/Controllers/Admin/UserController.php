@@ -9,7 +9,7 @@ use App\Models\User;
 class UserController extends Controller
 {
     public function index(){
-        $users = User::orderByDesc('id')->get();
+        $users = User::orderByDesc('id')->paginate(5);
         return view('admin.user.view', compact('users'));
     }
 
@@ -24,7 +24,7 @@ class UserController extends Controller
     }
 
     public function trash(){
-        $users = User::onlyTrashed()->get();
+        $users = User::onlyTrashed()->paginate(5);
         return view('admin.user.trash', compact('users'));
     }
 

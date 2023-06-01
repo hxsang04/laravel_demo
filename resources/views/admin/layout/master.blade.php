@@ -957,7 +957,7 @@
                                     </div>
                                 </div>
                                 <div class="widget-content-left  ml-3 header-user-info">
-                                    <div class="widget-heading"> {{Auth::guard('admin')->name}}</div>
+                                    <div class="widget-heading"> {{Auth::user()->name }}</div>
                                     <div class="widget-subheading"> VP People Manager </div>
                                 </div>
                                 <div class="widget-content-right header-user-info ml-3">
@@ -1321,17 +1321,17 @@
                                 </a>
                                 <ul>
                                     <li>
-                                        <a href="/admin/product" class="mm-active">
+                                        <a href="{{route('product.index')}}" class="{{ request()->segment(2) == 'product' ? 'mm-active' : ''}}">
                                             <i class="metismenu-icon"></i>Product
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/admin/order">
+                                        <a href="{{route('order.index')}}" class="{{ request()->segment(2) == 'order' ? 'mm-active' : ''}}">
                                             <i class="metismenu-icon"></i>Order
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{route('user.index')}}">
+                                        <a href="{{route('user.index')}}" class="{{ request()->segment(2) == 'user' ? 'mm-active' : ''}}">
                                             <i class="metismenu-icon"></i>User
                                         </a>
                                     </li>

@@ -60,9 +60,7 @@
                                 @endforeach
                                 <li>Total Price
                                     <span>
-                                        @if (session('total_price'))
-                                            {{ number_format(session('total_price')) }} VNĐ
-                                        @endif
+                                        {{number_format($order->total_price)}} VNĐ
                                     </span>
                                 </li>
                             </ul>

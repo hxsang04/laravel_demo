@@ -109,9 +109,8 @@
                             @endif
 
                             <div class="border-t border-gray-200"></div>
-
                             <!-- Authentication -->
-                            <form method="POST" action="{{ route('logout') }}" x-data>
+                            <form method="POST" action="{{ isset($guard) ? route('admin.logout') : route('logout') }}" x-data>
                                 @csrf
 
                                 <x-dropdown-link href="{{ route('logout') }}"

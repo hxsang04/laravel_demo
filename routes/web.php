@@ -22,12 +22,7 @@ use App\Http\Controllers\Frontend\CheckOutController;
 */
 
 // Backend Route
-Route::prefix('admin')->group(function(){
-
-    Route::middleware('admin:admin')->group( function (){
-        Route::get('/login', [AuthController::class, 'login'])->name('admin.login');
-        Route::post('/login', [AuthController::class, 'store'])->name('admin.loginPost');
-    });
+Route::prefix('admin')->middleware('auth:admin')->group(function(){
 
     Route::prefix('/product')->group(function(){
 
@@ -41,6 +36,8 @@ Route::prefix('admin')->group(function(){
         Route::get('/trash', [ProductController::class, 'trash'])->name('product.trash');
         Route::post('/restore/{id}', [ProductController::class, 'restore'])->name('product.restore');
         Route::post('/remove/{id}', [ProductController::class, 'remove'])->name('product.remove');
+        Route::post('/import', [ProductController::class, 'import'])->name('product.import');
+        Route::get('/export', [ProductController::class, 'export'])->name('product.export');
 
     });
 
@@ -59,11 +56,16 @@ Route::prefix('admin')->group(function(){
 
    
 });
+Route::middleware('admin:admin')->group( function (){
+    Route::get('admin/login', [AuthController::class, 'login'])->name('admin.login');
+    Route::post('admin/login', [AuthController::class, 'store'])->name('admin.loginPost');
+    Route::post('admin/logout', [AuthController::class, 'destroy'])->name('admin.logout');
+});
 
-Route::middleware(['auth:sanctum, admin', config('jetstream.auth_session'), 'verified'])->group(function () {
+Route::middleware(['auth:sanctum,admin', config('jetstream.auth_session'), 'verified'])->group(function () {
     Route::get('/admin/dashboard', function () {
         return view('dashboard');
-    })->name('dashboard');
+    })->name('dashboard')->middleware('auth:admin');
 });
 
 //Frontend Route
@@ -75,7 +77,8 @@ Route::get('/product/{product}', [ShopController::class, 'product'])->name('prod
 Route::get('/order-history', [ShopController::class, 'orderHistory'])->name('orderHistory');
 Route::get('/order-history/{order}', [ShopController::class, 'orderHistoryDetail'])->name('orderHistoryDetail');
 Route::get('/cart', [CartController::class, 'cart'])->name('cart');
-Route::post('/addToCart/{product}', [CartController::class, 'addToCart'])->name('addToCart');
+Route::post('/cart/add/{product}', [CartController::class, 'add'])->name('cart.add');
+Route::post('/cart/delete/{id}', [CartController::class, 'delete'])->name('cart.delete');
 Route::get('/checkout', [CheckOutController::class, 'checkOut'])->middleware('auth')->name('checkOut');
 Route::post('/checkout', [CheckOutController::class, 'checkOutPost'])->middleware('auth')->name('checkOutPost');
 
