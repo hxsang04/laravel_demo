@@ -125,4 +125,11 @@ class ProductController extends Controller
     public function export(){
         return Excel::download(new ProductsExport, 'products.xlsx');
     }
+
+    public function search(Request $request){
+        $search = $request->input('search') ?? '';
+        $products = Product::where('name', 'like', '%'.$search.'%')->paginate(5);
+    
+        return view('admin.product.search', compact('products'));
+    }
 }

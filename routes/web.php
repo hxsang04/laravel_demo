@@ -38,6 +38,7 @@ Route::prefix('admin')->middleware('auth:admin')->group(function(){
         Route::post('/remove/{id}', [ProductController::class, 'remove'])->name('product.remove');
         Route::post('/import', [ProductController::class, 'import'])->name('product.import');
         Route::get('/export', [ProductController::class, 'export'])->name('product.export');
+        Route::post('/search', [ProductController::class, 'search'])->name('product.search');
 
     });
 
@@ -74,8 +75,8 @@ Route::middleware(['auth:sanctum,admin', config('jetstream.auth_session'), 'veri
 Route::get('/', [ShopController::class, 'index'])->name('home');
 Route::get('/shop', [ShopController::class, 'shop'])->name('shop');
 Route::get('/product/{product}', [ShopController::class, 'product'])->name('product');
-Route::get('/order-history', [ShopController::class, 'orderHistory'])->name('orderHistory');
-Route::get('/order-history/{order}', [ShopController::class, 'orderHistoryDetail'])->name('orderHistoryDetail');
+Route::get('/order-history', [ShopController::class, 'orderHistory'])->middleware('auth')->name('orderHistory');
+Route::get('/order-history/{order}', [ShopController::class, 'orderHistoryDetail'])->middleware('auth')->name('orderHistoryDetail');
 Route::get('/cart', [CartController::class, 'cart'])->name('cart');
 Route::post('/cart/add/{product}', [CartController::class, 'add'])->name('cart.add');
 Route::post('/cart/delete/{id}', [CartController::class, 'delete'])->name('cart.delete');

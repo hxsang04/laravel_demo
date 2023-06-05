@@ -67,7 +67,8 @@
 
                 <div class="card-header">
 
-                    <form method="get" action="{{ route('product.search') }}">
+                    <form method="POST" action="{{ route('product.search') }}">
+                        @csrf
                         <div class="input-group">
                             <input type="search" name="search" id="search" placeholder="Search everything" class="form-control">
                             <span class="input-group-append">
