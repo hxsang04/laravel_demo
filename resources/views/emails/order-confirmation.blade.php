@@ -531,7 +531,7 @@
                                                               align="right" bgcolor="#ffffff" valign="top">
                                                               <p style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Karla'; font-size: 16px; line-height: 26px; font-weight: 400; color: #666363; margin: 0;"
                                                                 align="right">
-                                                                ${{number_format($product->pivot->unit_price)}}
+                                                                {{number_format($product->pivot->unit_price)}} VNĐ
                                                               </p>
                                                             </th>
                                                           </tr>
@@ -561,7 +561,7 @@
                                                       align="left" bgcolor="#ffffff" valign="top">Total</th>
                                                     <th class="table-text"
                                                       style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Karla'; font-size: 16px; line-height: 26px; font-weight: 400; color: #666363; width: 35%; padding: 6px 0;"
-                                                      align="right" bgcolor="#ffffff" valign="middle">${{number_format($order->total_price)}}</th>
+                                                      align="right" bgcolor="#ffffff" valign="middle">{{number_format($order->total_price)}} VNĐ</th>
                                                   </tr>
                                                   <!-- End Total Price -->
   
