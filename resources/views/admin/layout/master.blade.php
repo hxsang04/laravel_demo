@@ -18,9 +18,12 @@
 
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
 
     <link href="./admin/assets/css/main.css" rel="stylesheet">
     <link href="./admin/assets/css/my_style.css" rel="stylesheet">
+    <link href="./admin/assets/css/pe-icon-7-stroke.css" rel="stylesheet">
+
 </head>
 
 <body>
