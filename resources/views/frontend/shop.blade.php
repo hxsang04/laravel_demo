@@ -168,7 +168,7 @@
                                 <div class="col-lg-4 col-sm-6">
                                     <div class="product-item">
                                         <div class="pi-pic">
-                                            <img src="{{$product->image}}" alt="{{$product->name}}">
+                                            <img src="{{'storage/'.$product->image}}" alt="{{$product->name}}">
                                             <div class="sale pp-sale">Sale</div>
                                             <div class="icon">
                                                 <i class="icon_heart_alt"></i>

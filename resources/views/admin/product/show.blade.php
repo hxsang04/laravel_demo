@@ -30,8 +30,8 @@
                             <div class="col-md-9 col-xl-8">
                                 <ul class="text-nowrap overflow-auto" id="images">
                                     <li class="d-inline-block mr-1" style="position: relative;">
-                                        <img style="height: 150px;" src="{{ $product->image}}"
-                                            alt="Image">
+                                        <img style="height: 150px;" src="{{'storage/'.$product->image}}"
+                                            alt="{{$product->name}}">
                                     </li>
                                 </ul>
                             </div>

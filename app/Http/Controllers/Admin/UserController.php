@@ -24,7 +24,7 @@ class UserController extends Controller
     }
 
     public function trash(){
-        $users = User::onlyTrashed()->paginate(5);
+        $users = User::onlyTrashed()->orderByDesc('id')->paginate(5);
         return view('admin.user.trash', compact('users'));
     }
 

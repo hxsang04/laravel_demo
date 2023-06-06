@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\CheckOutRequest;
 use App\Models\Order;
 use Auth;
+use App\Jobs\SendOrderConfirmationEmail;
 
 class CheckOutController extends Controller
 {
@@ -15,7 +16,7 @@ class CheckOutController extends Controller
     }
 
     public function checkOutPost(CheckOutRequest $request){
-        // dd(session()->all());
+        
         $data = $request->all();
         $data['total_price'] = session('total_price');
         $data['user_id'] = Auth::id();
@@ -29,6 +30,7 @@ class CheckOutController extends Controller
             ]);
         }
         session()->forget(['cart','total_price']);
+        SendOrderConfirmationEmail::dispatch($order);
 
         return redirect()->route('orderHistory');
 

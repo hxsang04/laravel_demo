@@ -38,7 +38,7 @@ Route::prefix('admin')->middleware('auth:admin')->group(function(){
         Route::post('/remove/{id}', [ProductController::class, 'remove'])->name('product.remove');
         Route::post('/import', [ProductController::class, 'import'])->name('product.import');
         Route::get('/export', [ProductController::class, 'export'])->name('product.export');
-        Route::post('/search', [ProductController::class, 'search'])->name('product.search');
+        Route::get('/search', [ProductController::class, 'search'])->name('product.search');
 
     });
 

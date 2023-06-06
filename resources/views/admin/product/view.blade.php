@@ -64,12 +64,12 @@
     <div class="row">
         <div class="col-md-12">
             <div class="main-card mb-3 card">
-
                 <div class="card-header">
 
-                    <form method="get" action="{{ route('product.search') }}">
+                    <form action="{{ route('product.search') }}">
                         <div class="input-group">
-                            <input type="search" name="search" id="search" placeholder="Search everything" class="form-control">
+                            <input type="search" name="search" id="search" placeholder="Search everything" class="form-control" required>
+
                             <span class="input-group-append">
                                 <button type="submit" class="btn btn-primary">
                                     <i class="fa fa-search"></i>&nbsp;
@@ -112,7 +112,7 @@
                                                     <img style="height: 60px;"
                                                         data-toggle="tooltip" title="Image"
                                                         data-placement="bottom"
-                                                        src="{{$product->image}}" alt="">
+                                                        src="{{'storage/'.$product->image}}" alt="">
                                                 </div>
                                             </div>
                                             <div class="widget-content-left flex2">

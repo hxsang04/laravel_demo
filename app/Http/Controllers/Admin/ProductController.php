@@ -11,6 +11,7 @@ use App\Http\Services\ProductService;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ProductsExport;
 use App\Imports\ProductsImport;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -41,7 +42,7 @@ class ProductController extends Controller
         $image = $request->file('image');
         $nameImage = $image->hashName();
         $image->storeAs('public/uploads/product', $nameImage);
-        $data['image'] = 'storage/uploads/product/'. $nameImage;
+        $data['image'] = 'uploads/product/'. $nameImage;
         
         $product = Product::create($data);
         return redirect()->route('product.show',$product->id);
@@ -75,7 +76,9 @@ class ProductController extends Controller
             $image = $request->file('image');
             $nameImage = $image->hashName();
             $image->storeAs('public/uploads/product', $nameImage);
-            $data['image'] = 'storage/uploads/product/'. $nameImage;
+            $data['image'] = 'uploads/product/'. $nameImage;
+
+            Storage::disk('public')->delete($product->image);
         }
 
         $product->update($data);
@@ -94,7 +97,7 @@ class ProductController extends Controller
     }
 
     public function trash(){
-        $products = Product::onlyTrashed()->paginate(5);
+        $products = Product::onlyTrashed()->orderByDesc('id')->paginate(5);
         return view('admin.product.trash', compact('products'));
     }
 
@@ -109,7 +112,9 @@ class ProductController extends Controller
 
     public function remove($id){
         $product = Product::withTrashed()->findOrFail($id);
-        if(!empty($product)){
+
+        if(isset($product)){
+            Storage::disk('public')->delete($product->image);
             $product->forceDelete();
             return back()->with('success', 'Successful remove!');
         }
@@ -127,8 +132,9 @@ class ProductController extends Controller
     }
 
     public function search(Request $request){
+        $request->validate(['search' => 'required|alpha_num']);
         $search = $request->input('search') ?? '';
-        $products = Product::where('name', 'like', '%'.$search.'%')->paginate(5);
+        $products = Product::where('name', 'like', '%'.$search.'%')->orderByDesc('id')->paginate(5);
     
         return view('admin.product.search', compact('products'));
     }

@@ -48,7 +48,7 @@
                                                             <img style="height: 60px;"
                                                                 data-toggle="tooltip" title="Image"
                                                                 data-placement="bottom"
-                                                                src="{{$product->image}}" alt="{{$product->name}}">
+                                                                src="{{'storage/'.$product->image}}" alt="{{$product->name}}">
                                                         </div>
                                                     </div>
                                                     <div class="widget-content-left flex2">

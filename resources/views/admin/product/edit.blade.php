@@ -30,7 +30,7 @@
                                 <label for="name" class="col-md-3 text-md-right col-form-label">Name</label>
                                 <div class="col-md-9 col-xl-8">
                                     <input name="name" id="name" placeholder="Name" type="text"
-                                        class="form-control" value="{{$product->name}}">
+                                        class="form-control" value="{{ old('name', $product->name)}}">
                                     @error('name')
                                         <x-alert type="danger" message="{{ $message }}"/>
                                     @enderror
@@ -42,7 +42,7 @@
                                     class="col-md-3 text-md-right col-form-label">Price</label>
                                 <div class="col-md-9 col-xl-8">
                                     <input name="price" id="price"
-                                        placeholder="Price" type="text" class="form-control" value="{{$product->price}}">
+                                        placeholder="Price" type="text" class="form-control" value="{{old('price',$product->price)}}">
                                     @error('price')
                                         <x-alert type="danger" message="{{ $message }}"/>
                                     @enderror
@@ -53,7 +53,7 @@
                                 <label for="description"
                                     class="col-md-3 text-md-right col-form-label">Description</label>
                                 <div class="col-md-9 col-xl-8">
-                                    <textarea class="form-control" name="description" id="description" placeholder="Description">{{$product->description}}</textarea>
+                                    <textarea class="form-control" name="description" id="description" placeholder="Description">{{old('description', $product->description)}}</textarea>
                                     @error('description')
                                         <x-alert type="danger" message="{{ $message }}"/>
                                     @enderror
@@ -67,7 +67,7 @@
                                     @error('image')
                                         <x-alert type="danger" message="{{ $message }}"/>
                                     @enderror
-                                    <img class="mt-2" src="{{$product->image}}" alt="{{$product->name}}" width="100" height="120">
+                                    <img class="mt-2" src="{{'storage/'.$product->image}}" alt="{{$product->name}}" width="100" height="120">
                                 </div>
                             </div>
 

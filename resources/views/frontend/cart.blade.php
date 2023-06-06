@@ -44,7 +44,7 @@
                                 @if (session('cart'))
                                     @foreach(session('cart') as $product)
                                     <tr>
-                                        <td class="cart-pic first-row"><img style='width: 100px' src="{{$product['image']}}" alt="{{$product['name']}}"></td>
+                                        <td class="cart-pic first-row"><img style='width: 100px' src="{{'storage/'.$product['image']}}" alt="{{$product['name']}}"></td>
                                         <td class="cart-title first-row">
                                             <a href="{{route('product', $product['product_id'])}}"><h5>{{$product['name']}}</h5></a>
                                         </td>
